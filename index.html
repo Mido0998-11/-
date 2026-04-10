@@ -3,49 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ahmed Adel | MOHA Empire</title>
+    <title>Ahmed Adel | MOHA</title>
     <style>
         :root {
-            --neon: #00f2ff;
-            --green: #39ff14;
+            --cyan: #00f2ff;
             --pink: #ff00ff;
-            --gold: #f39c12;
             --dark: #0a0f14;
-            --card-bg: rgba(23, 33, 43, 0.98);
+            --card-bg: rgba(10, 15, 20, 0.95);
         }
 
         body {
             background: var(--dark);
+            background-image: radial-gradient(circle at center, #1a2a3a 0%, #0a0f14 100%);
             color: white;
             font-family: system-ui, -apple-system, sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--neon);
-            border-radius: 20px;
-            padding: 30px 20px;
+        .page-container {
+            width: 100%;
+            max-width: 420px;
+            padding-bottom: 50px;
+        }
+
+        /* الهيدر العلوي */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(10, 15, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--pink);
+            text-shadow: 0 0 15px var(--pink);
+        }
+
+        .header .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header .nav a {
+            text-decoration: none;
+            color: #ccc;
+            font-size: 16px;
+        }
+
+        .header .nav a.active {
+            color: white;
+            border-bottom: 2px solid var(--pink);
+            padding-bottom: 4px;
+        }
+
+        /* الكارد الرئيسي */
+        .main-content {
             text-align: center;
-            width: 85%;
-            max-width: 380px;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* صورة البروفايل المحدثة */
+        .avatar-wrapper {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 30px;
             position: relative;
         }
 
         .avatar-container {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 15px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            border: 2px solid var(--neon);
-            box-shadow: 0 0 10px var(--neon);
+            border: 3px solid var(--cyan);
+            box-shadow: 0 0 25px var(--cyan);
             overflow: hidden;
+            background: #000;
         }
 
         .avatar-container img {
@@ -54,117 +99,161 @@
             object-fit: cover;
         }
 
+        /* الاسم الجديد */
         h1 { 
-            font-size: 22px; 
-            color: white; 
-            margin: 5px 0; 
-            text-shadow: 0 0 5px var(--neon);
+            font-size: 32px; 
+            margin: 10px 0; 
+            font-weight: 800;
         }
 
-        .subtitle { 
-            color: var(--neon); 
-            font-size: 13px; 
-            font-weight: bold;
-            display: block; 
-            margin-bottom: 15px; 
-            letter-spacing: 1px;
-        }
-        
+        .name-main { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+        .name-sub { color: var(--pink); text-shadow: 0 0 10px var(--pink); }
+
+        /* الوصف المحدث */
         .bio { 
-            font-size: 13.5px; 
-            line-height: 1.6; 
-            color: #bdc3c7; 
-            margin-bottom: 25px;
-            padding: 0 10px;
+            font-size: 19px; 
+            line-height: 1.8; 
+            color: #e0e0e0; 
+            margin: 20px 0;
+            font-weight: 400;
         }
 
-        .links-grid { display: grid; gap: 10px; }
+        /* الأزرار العائمة */
+        .floating-controls {
+            position: fixed;
+            right: 25px;
+            top: 55%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 99;
+        }
 
-        .link-btn {
-            background: transparent;
-            border: 1px solid rgba(0, 242, 255, 0.5);
-            color: white;
-            padding: 13px;
-            border-radius: 12px;
+        .f-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 22px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: 0.3s;
+        }
+
+        .btn-web { background: #00d2ff; color: white; }
+        .btn-music { background: #ff4081; color: white; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 64, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
+        }
+
+        /* روابط التواصل المحدثة */
+        .social-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            padding: 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s;
         }
 
-        .link-btn:hover { 
-            background: var(--neon); 
-            color: var(--dark); 
-            transform: scale(1.03);
-            border-color: var(--neon);
+        .social-link:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.02);
         }
 
-        /* تمييز زر الصوت الجديد */
-        .audio-special {
-            border-color: var(--pink);
-            background: rgba(255, 0, 255, 0.05);
-        }
-
-        #music-container { display: none; }
-
-        .footer { margin-top: 25px; font-size: 10px; color: #444; letter-spacing: 2px; }
+        #music-player { display: none; }
     </style>
 </head>
 <body>
 
-<div id="music-container">
-    <iframe id="youtube-player" 
-            src="https://www.youtube.com/embed/Orvk4ElMZvU?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=Orvk4ElMZvU" 
-            allow="autoplay">
-    </iframe>
+<div class="page-container">
+    <header class="header">
+        <nav class="nav">
+            <a href="#">تواصل</a>
+            <a href="#">عني</a>
+            <a href="#" class="active">الرئيسية</a>
+        </nav>
+        <div class="logo">MOHA</div>
+    </header>
+
+    <main class="main-content">
+        <div class="avatar-wrapper">
+            <div class="avatar-container">
+                <img src="https://i.ibb.co/3mS7pXG/image-0.png" alt="Ahmed Adel / MOHA">
+            </div>
+        </div>
+        
+        <h1><span class="name-main">Ahmed adel</span> / <span class="name-sub">moha</span></h1>
+
+        <p class="bio">
+            عاشق للتصميم المعماري ومجال التداول والبرمجة
+        </p>
+
+        <div class="floating-controls">
+            <a href="https://mido0998-11.github.io/-/" class="f-btn btn-web">🌐</a>
+            <button onclick="toggleMusic()" class="f-btn btn-music" id="musicBtn">🎵</button>
+        </div>
+
+        <div class="social-bar">
+            <a href="https://www.facebook.com/share/18bsBUgnkD/?mibextid=wwXIfr" class="social-link" style="border-color: #1877F2;">
+                Facebook
+            </a>
+            <a href="https://www.instagram.com/its_moha249?igsh=MXFnYTdwdWh5Y2NzMQ%3D%3D&utm_source=qr" class="social-link" style="border-color: #E1306C;">
+                Instagram
+            </a>
+            <a href="https://wa.me/249116881415" class="social-link" style="border-color: #25D366;">
+                WhatsApp: 0116881415
+            </a>
+        </div>
+    </main>
 </div>
 
-<div class="card">
-    <div class="avatar-container">
-        <img src="https://i.ibb.co/3mS7pXG/image-0.png" alt="Ahmed Adel / MOHA">
-    </div>
-    
-    <h1>Ahmed Adel / MOHA</h1>
-    <span class="subtitle">ARCHITECT • DEVELOPER • TRADER</span>
-
-    <p class="bio">
-        طالب هندسة معمارية، مطور أنظمة، ومتداول محترف. ندمج بين دقة التصميم الهندسي وقوة التحليل التقني في إمبراطورية <b>MOHA</b>.
-    </p>
-
-    <div class="links-grid">
-        <a href="https://files.catbox.moe/0btxrw.mp4" target="_blank" class="link-btn audio-special">
-            <span>🔊</span> استمع إلى المقطع الصوتي
-        </a>
-
-        <a href="https://wa.me/249928372079" target="_blank" class="link-btn" style="border-color: var(--green);">
-            <span>🟢</span> WhatsApp | 0928372079
-        </a>
-
-        <a href="https://www.instagram.com/rere_5_3_?igsh=MXFnYTdwdWh5Y2NzMQ%3D%3D&utm_source=qr" target="_blank" class="link-btn" style="border-color: #E1306C;">
-            <span>📸</span> Instagram | MOHA
-        </a>
-
-        <a href="https://www.facebook.com/share/1C9nLeW1JS/?mibextid=wwXIfr" target="_blank" class="link-btn" style="border-color: #1877F2;">
-            <span>🔵</span> Facebook | Empire
-        </a>
-
-        <a href="#" class="link-btn" style="border-color: var(--gold);">
-            <span>📈</span> Trading & Analysis
-        </a>
-    </div>
-
-    <div class="footer">
-        © 2026 | MOHA EMPIRE
-    </div>
+<div id="music-player">
+    <iframe id="audio-frame" src="https://mido0998-11.github.io/-/" allow="autoplay"></iframe>
 </div>
 
 <script>
+    var isPlaying = false;
+    function toggleMusic() {
+        var btn = document.getElementById('musicBtn');
+        var audio = document.getElementById('audio-frame');
+        
+        if (!isPlaying) {
+            // تفعيل الموسيقى من الرابط
+            audio.src = "https://mido0998-11.github.io/-/"; 
+            isPlaying = true;
+            btn.style.animation = "pulse 1s infinite";
+        } else {
+            audio.src = "";
+            isPlaying = false;
+            btn.style.animation = "none";
+        }
+    }
+
+    // تشغيل تلقائي عند أول تفاعل
     document.body.addEventListener('click', function() {
-        var player = document.getElementById('youtube-player');
-        player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        if(!isPlaying) toggleMusic();
     }, { once: true });
 </script>
 
